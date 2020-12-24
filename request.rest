@@ -1,0 +1,32 @@
+@host = http://localhost:8080/api
+
+//register
+POST  {{host}}/auth/register
+Content-Type: application/json
+
+{
+    "username":"nhoctargunn",
+    "email":"nhoctargunn@gmail.com",
+    "name":"tar gunn",
+    "password":"123123"
+}
+
+###
+//verify
+POST  {{host}}/auth/verify
+Content-Type: application/json
+
+{
+    "code":"s@dCC6MX1",
+    "username":"nhoctargunn"
+}
+
+###
+//login
+POST  {{host}}/auth/login
+Content-Type: application/json
+
+{
+    "password":"123123",
+    "username":"nhoctargunn"
+}
