@@ -214,7 +214,7 @@ router.post(
  *        400:
  *          description: bad request
  */
-router.post('/refresh-token', validator.refreshToken, controller.refreshToken);
+router.post('/refresh-token', validator.isToken, controller.refreshToken);
 
 /**
  * @swagger
@@ -242,6 +242,6 @@ router.post('/refresh-token', validator.refreshToken, controller.refreshToken);
  *        400:
  *          description: bad request
  */
-router.post('/logout', validator.refreshToken, controller.logout);
+router.post('/logout', validator.isToken, controller.logout);
 
 module.exports = router;

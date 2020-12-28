@@ -9,6 +9,7 @@ const User = require('../../models/user.model');
 
 const router = express.Router();
 const authRoutes = require('./auth.route');
+const adminRoutes = require('./admin.route');
 
 const swaggerOptions = {
   swaggerDefinition: {
@@ -18,7 +19,7 @@ const swaggerOptions = {
       version: '1.0.0', // Version (required)
       description: 'The api docs of My-Blog', // Description (optional)
     },
-    host: `192.168.1.9:${process.env.PORT}`, // Host (optional)
+    host: `192.168.1.8:${process.env.PORT}`, // Host (optional)
     basePath: '/api', // Base path (optional)
   },
   apis: ['./routes/api/*.js'],
@@ -35,6 +36,14 @@ router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
  *   description: Auth api
  */
 router.use('/auth', authRoutes);
+
+/**
+ * @swagger
+ * tags:
+ * - name: Admin
+ *   description: Admin api
+ */
+router.use('/admin', adminRoutes);
 
 router.get('/test', async (req, res, next) => {
   const ward = await Ward.findOne({ code: '10000' }).populate('.model');

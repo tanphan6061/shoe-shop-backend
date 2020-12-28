@@ -1,4 +1,6 @@
+/* eslint-disable func-names */
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 const adminSchema = mongoose.Schema(
   {
@@ -34,6 +36,24 @@ const adminSchema = mongoose.Schema(
     timestamps: true,
   },
 );
+
+adminSchema.pre('save', function (next) {
+  const admin = this;
+  if (!admin.isModified('password')) return next(); // if admin not change password
+  const salt = parseInt(process.env.BCRYPT_HASH, 10);
+  bcrypt.hash(admin.password, salt, (err, hash) => {
+    if (err) throw err;
+    admin.password = hash;
+    next();
+  });
+});
+
+adminSchema.methods.comparePassword = function (password, cb) {
+  bcrypt.compare(password, this.password, (err, isMatch) => {
+    if (err) return cb(err);
+    return cb(null, isMatch);
+  });
+};
 
 const Admin = mongoose.model('Admin', adminSchema, 'admins');
 module.exports = Admin;

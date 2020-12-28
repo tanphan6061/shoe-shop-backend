@@ -118,7 +118,7 @@ module.exports.login = (req, res, next) => {
   next();
 };
 
-module.exports.refreshToken = (req, res, next) => {
+module.exports.isToken = (req, res, next) => {
   const schema = Joi.object({
     token: Joi.string().required(), // refresh token
   });
